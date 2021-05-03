@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zone.iread.ipoetry.mapper.PoetMapper">
+
+    <resultMap id="BaseResultMap" type="zone.iread.ipoetry.domain.Poet" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="period" jdbcType="VARCHAR" property="period"/>
+        <result column="introduction" jdbcType="LONGVARCHAR" property="introduction"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,sex,pic,period,introduction
+    </sql>
+
+    <!--<insert id="insert" parameterType="zone.iread.ipoetry.domain.Poet">
+        insert into poet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="period != null">
+                period,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="birth != null">
+                #{birth},
+            </if>
+            <if test="location != null">
+                #{location},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+        </trim>
+    </insert>-->
+    <update id="update" parameterType="zone.iread.ipoetry.domain.Poet">
+        update poet
+        <set>
+            <if test="name != null">
+                name=#{name},
+            </if>
+            <if test="sex != null">
+                sex=#{sex},
+            </if>
+            <if test="pic != null">
+                pic=#{pic},
+            </if>
+            <if test="period != null">
+                period=#{period},
+            </if>
+            <if test="introduction != null">
+                introduction=#{introduction},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="poetOfName" resultType="zone.iread.ipoetry.domain.Poet"></select>
+    <select id="poetOfPeriod" resultType="zone.iread.ipoetry.domain.Poet"></select>
+    <select id="poetCount" resultType="java.lang.Integer">
+        select count(*) from poet
+    </select>
+</mapper>

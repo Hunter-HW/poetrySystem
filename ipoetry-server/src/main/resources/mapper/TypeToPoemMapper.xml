@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zone.iread.ipoetry.mapper.TypeToPoemMapper">
+
+    <resultMap id="BaseResultMap" type="zone.iread.ipoetry.domain.TypeToPoem" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="type_id" jdbcType="INTEGER" property="typeId"/>
+        <result column="poem_id" jdbcType="INTEGER" property="poemId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type_id,poem_id
+    </sql>
+    <insert id="insert" parameterType="zone.iread.ipoetry.domain.TypeToPoem">
+         insert into type_to_poem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">type_id,</if>
+            <if test="poemId != null">poem_id,</if>
+        </trim>
+        <trim prefix="value(" suffix=")" suffixOverrides=",">
+            <if test="typeId != null">#{typeId},</if>
+            <if test="poemId != null">#{poemId}</if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="zone.iread.ipoetry.domain.TypeToPoem">
+        update type_to_poem
+        <set>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="poemId != null">poem_id = #{poemId}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from type_to_poem where id = #{id}
+    </delete>
+    <delete id="deleteByPoemIdTypeId" parameterType="java.lang.Integer">
+        delete from type_to_poem where poem_id = #{poemId} and type_id = #{typeId}
+    </delete>
+    <delete id="deleteByPoemId" parameterType="java.lang.Integer">
+        delete from type_to_poem where poem_id = #{poemId}
+    </delete>
+    <select id="allTypeToPoem" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from type_to_poem
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from type_to_poem where id = #{id}
+    </select>
+    <select id="typeToPoemOfTypeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select id,type_id,poem_id from type_to_poem where type_id = #{id}
+    </select>
+
+
+</mapper>

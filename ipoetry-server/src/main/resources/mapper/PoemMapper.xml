@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zone.iread.ipoetry.mapper.PoemMapper">
+
+    <resultMap id="BaseResultMap" type="zone.iread.ipoetry.domain.Poem" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="poet_id" jdbcType="INTEGER" property="poetId"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="view" jdbcType="INTEGER" property="view"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id,poet_id,name,introduction,content,pic,view,create_time,update_time
+    </sql>
+    <insert id="insert" parameterType="zone.iread.ipoetry.domain.Poem">
+        insert into poem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="poetId != null">
+                poet_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="introduction != null">
+                introduction,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="pic != null">
+                pic,
+            </if>
+            <if test="view != null">
+                view,
+            </if>
+            --             创建时间和修改时间-----即为当前时间
+            create_time,update_time,
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="poetId != null">
+                #{poetId},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="introduction != null">
+                #{introduction},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="pic != null">
+                #{pic},
+            </if>
+            <if test="view != null">
+                #{view},
+            </if>
+            now(),now(),
+        </trim>
+    </insert>
+    <update id="update" parameterType="zone.iread.ipoetry.domain.Poem">
+        update poem
+        <set>
+            <if test="poetId != null">
+                poet_id = #{poetId},
+            </if>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+            <if test="pic != null">
+                pic = #{pic},
+            </if>
+            <if test="view != null">
+                view = #{view},
+            </if>
+          update_time = now(),
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from poem where id = #{id}
+    </delete>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from poem where id = #{id}
+    </select>
+    <select id="allPoem" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from poem
+    </select>
+    <select id="poemOfName" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from poem where name = #{poemName}
+    </select>
+    <select id="poemOfPoetId" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from poem where poet_id = #{poetId}
+    </select>
+    <select id="poemCount" resultType="java.lang.Integer">
+        select count(*) from poem
+    </select>
+
+
+</mapper>

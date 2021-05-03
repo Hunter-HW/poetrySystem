@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zone.iread.ipoetry.mapper.PoemTypeMapper">
+
+    <resultMap id="BaseResultMap" type="zone.iread.ipoetry.domain.PoemType" >
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
+        <result column="introduction" jdbcType="NVARCHAR" property="introduction"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,pic,introduction
+    </sql>
+    <insert id="insert" parameterType="zone.iread.ipoetry.domain.PoemType">
+        insert into poem_types
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="title != null">title,</if>
+            <if test="pic != null">pic,</if>
+            <if test="introduction != null">introduction,</if>
+        </trim>
+        <trim prefix="value (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="title != null">#{title},</if>
+            <if test="pic != null">#{pic},</if>
+            <if test="introduction != null">#{introduction},</if>
+        </trim>
+    </insert>
+    <update id="update" parameterType="zone.iread.ipoetry.domain.Poem">
+        update poem_types
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="pic != null">pic = #{pic},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from poem_types where id = #{id}
+    </delete>
+    <select id="selectByPrimaryKey" resultType="zone.iread.ipoetry.domain.PoemType" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from poem_types where id = #{id}
+    </select>
+    <select id="allPoemType" resultType="zone.iread.ipoetry.domain.PoemType">
+        select <include refid="Base_Column_List"/> from poem_types
+    </select>
+    <select id="poemTypeOfTitle" resultType="zone.iread.ipoetry.domain.PoemType">
+        select <include refid="Base_Column_List"/> from poem_types where title like #{title}
+    </select>
+    <select id="typeCount" resultType="java.lang.Integer">
+        select count(*) from poem_types
+    </select>
+
+</mapper>
